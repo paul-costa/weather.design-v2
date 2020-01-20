@@ -1,0 +1,67 @@
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  
+  height: 100%;
+  width: 100%;
+
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
+
+  transition: 1s;
+}
+
+.degreeBig {
+    font-size: 10em;
+}
+
+.clockAndDate {
+    font-size: 3em;
+}
+.cityAndCountry {
+    font-size: 3em;
+}
+
+.shortDesc, .humidPercent, .windspeed {
+    font-size: 1.5em;
+}
+ 
+
+.icon {
+    width: 2em;
+    height: 2.5em;
+
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+
+    transition: 0.5s;
+}
+
+#humidityIcon {
+    background: url('../../assets/weatherIcons/humidity.svg');
+
+}
+#windspeedIcon {
+    background: url('../../assets/weatherIcons/windspeed.svg');
+}
+
+
+
+
+
+
+.sliderContainer {
+    width: 100%;
+    position: absolute;
+    bottom: 4em;
+
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+mat-slider {
+  width: 100%;
+}
