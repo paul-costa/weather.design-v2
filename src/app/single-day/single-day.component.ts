@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GetWeatherDataService } from '../get-weather-data.service';
+import { Component, OnInit, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+import { GetWeatherDataService } from '../get-weather-data.service';
 import {  WeatherResponse } from '../shared/types';
+import { NavigationService } from '../navigation.service';
 
 
 interface DisplayData {
@@ -31,14 +33,21 @@ export class SingleDayComponent implements OnInit, OnDestroy {
   public dateString;
   public shortDescIconUrl;
 
+  public applicatonProcessing=false;
+
   private city: string;
   private country: string;
 
   private backgroundChangeTimer;
+  public backgroundRandNumber:number;
 
-  constructor(private weatherService: GetWeatherDataService) { }
+
+  constructor(
+    private weatherService: GetWeatherDataService, private navigationService: NavigationService) { }
 
   ngOnInit() {
+    this.applicatonProcessing=true;
+    
     this.displayData = {
       date: null,
       degree: null,
@@ -49,8 +58,7 @@ export class SingleDayComponent implements OnInit, OnDestroy {
       iconString: null,
       windSpeed: null,
     };
-    
-    
+
     this.weatherService.getCurrentWeather();
     
     this.addressSub=this.weatherService.currentCityAndCountry.subscribe(GeocodingRes => {
@@ -60,14 +68,13 @@ export class SingleDayComponent implements OnInit, OnDestroy {
       this.processingSub=this.weatherService.proccessedReq.subscribe(weatherRes => {
         this.weatherResponse = weatherRes;
         this.getWeather(0, 'firstCall');
+        this.applicatonProcessing=false;
       })
-    })
+    });
 
-    
-
+    this.navigationService.openSnackBar('swipe left to access forecast');
   }
 
- 
 
   ngOnDestroy(): void {
     this.addressSub.unsubscribe();
@@ -76,16 +83,17 @@ export class SingleDayComponent implements OnInit, OnDestroy {
 
 
 
+
   getWeather(timestamp, additional?) {
     this.displayData = {
-      date: new Date(+(this.weatherResponse.hourly.data[timestamp].time)*1000),
-      degree: Math.floor(this.weatherResponse.hourly.data[timestamp].temperature),
-      city: this.city,
-      country: this.country,
-      humidity: this.weatherResponse.hourly.data[timestamp].humidity,
-      shortDesc: this.weatherResponse.hourly.data[timestamp].summary,
+      date:       new Date(+(this.weatherResponse.hourly.data[timestamp].time)*1000),
+      degree:     Math.floor(this.weatherResponse.hourly.data[timestamp].temperature),
+      city:       this.city,
+      country:    this.country,
+      humidity:   this.weatherResponse.hourly.data[timestamp].humidity,
+      shortDesc:  this.weatherResponse.hourly.data[timestamp].summary,
       iconString: this.weatherResponse.hourly.data[timestamp].icon,
-      windSpeed: this.weatherResponse.hourly.data[timestamp].windSpeed,
+      windSpeed:  this.weatherResponse.hourly.data[timestamp].windSpeed,
     };
 
 
@@ -103,7 +111,13 @@ export class SingleDayComponent implements OnInit, OnDestroy {
         this.backgroundUrl = this.chooseBackground(this.displayData.iconString);
       }, 1500);  
     }
-    
+  }
+
+  panEvent($event) {
+    this.navigationService.handlePanEvent(
+      $event.direction, 
+      this.displayData.iconString, 
+      this.backgroundRandNumber);
   }
 
 
@@ -113,6 +127,9 @@ export class SingleDayComponent implements OnInit, OnDestroy {
   }
 
   chooseBackground(iconString: string) {
-    return 'url(../../../../assets/backgrounds/' +  iconString + '/' + Math.floor(Math.random() * 5) + '.jpg';
+    this.backgroundRandNumber = Math.floor(Math.random() * 5);
+    return 'url(../../../../assets/backgrounds/' +  iconString + '/' + this.backgroundRandNumber + '.jpg';
   }
+
+ 
 }

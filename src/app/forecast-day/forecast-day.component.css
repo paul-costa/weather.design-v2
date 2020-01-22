@@ -1,0 +1,33 @@
+.timeBlock {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.timeCard {
+    border: 1px solid white;
+    border-radius: 1em;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.TimeText {
+    font-size: 1.25em;
+}
+
+.backButtonContainer {
+    position: fixed;
+    top: 1em;
+    left: 1em;
+}
+
+#humidityIcon {
+    height: 16px;
+    margin: auto 0;
+
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+
+    overflow: hidden;
+
+    background: url('../../assets/weatherIcons/humidity.svg');
+}

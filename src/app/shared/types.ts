@@ -7,9 +7,7 @@ export interface WeatherResponse {
     offset: number
 }
 
-
-
-export interface WeatherCurrently {
+interface WeatherCurrently {
     time: Date,
     summary: string,
     icon: string,
@@ -31,14 +29,14 @@ export interface WeatherCurrently {
     ozone: number
 }
 
-export interface WeatherHourly {
+interface WeatherHourly {
     summary: string,
     icon: string,
     data: Array<WeatherData>,
 }
 
 
-export interface WeatherData {
+interface WeatherData {
     time: Date,
     summary: string,
     icon: string,
@@ -57,4 +55,39 @@ export interface WeatherData {
     uvIndex: number,
     visibility: number,
     ozone: number
+}
+
+
+
+
+export interface ForecastData {
+    latitude: number,
+    longitude: number,
+    timezone: string,
+    daily: WeatherForecastDaily,
+}
+
+interface WeatherForecastDaily {
+    summary: string,
+    icon: string,
+    data: Array<WeatherForecastData>,
+}
+
+interface WeatherForecastData {
+    time: Date,
+    temperatureHigh: number,
+    icon: string,
+    temperatureLow: number,
+}
+
+
+
+
+
+
+export interface DetailedForecastData {
+    latitude: number,
+    longitude: number,
+    timezone: string,
+    hourly: WeatherHourly,
 }

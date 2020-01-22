@@ -1,1 +1,40 @@
-<p>multiple-days works!</p>
+<div 
+    class="backgroundImage" 
+    [ngStyle]="{background: backgroundUrl}" 
+    *ngIf="!applicatonProcessing"
+    (pan)="panEvent($event)"></div>
+
+<div class="container mt-5" *ngIf="applicatonProcessing">
+    <div class="row">
+        <div class="col-12 text-center">
+            <mat-spinner color="accent"></mat-spinner>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-2" (pan)="panEvent($event)">
+    <div class="row">
+        <div 
+            class="col-xl-2 col-lg-4 col-6 mb-lg-5 mb-md-3 mb-3 text-center"
+            style="padding-left: 1.5em; padding-right: 1.5em;"
+            *ngFor="let forecastData of forecastDisplayData"
+        >
+            <div class="row forecastElement" (click)="openDetailedForecast(forecastData.date)">
+                <div class="col-12 text-center date">
+                    {{forecastData.dateString}}
+                </div>
+                <div class="col-12 horline">
+                    <hr>
+                </div>
+
+                <div class="col-12 text-center degree">
+                    {{forecastData.temperatureHigh}}°C
+                </div>
+                <div class="col-12 text-center logo" [ngStyle]="{background: forecastData.icon}"></div>
+                <div class="col-12 text-center degree">
+                    {{forecastData.temperatureLow}}°C
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

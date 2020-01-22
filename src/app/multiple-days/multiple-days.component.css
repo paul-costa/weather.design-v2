@@ -1,0 +1,32 @@
+.container {
+    height: 100%;
+}
+
+.forecastElement {
+    border: 2px solid white;
+    border-radius: 1em;
+
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.date, .degree {
+    font-weight: 200;
+}
+
+.date {
+    font-size: 1.5em;
+    margin-top: 0.25em;
+    margin-bottom: -0.5em;
+}
+
+.degree {
+    font-size: 1.5em;
+}
+
+.logo {
+    height: 2em;
+    
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+}

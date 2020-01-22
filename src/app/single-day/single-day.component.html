@@ -1,13 +1,25 @@
-<div class="backgroundImage" [ngStyle]="{background: backgroundUrl}"></div>
+<div class="backgroundImage" [ngStyle]="{background: backgroundUrl}" *ngIf="!applicatonProcessing"></div>
 
-<div class="container">
-    <div class="row mt-5">
+<div class="overlay" *ngIf="!applicatonProcessing" (pan)="panEvent($event)"></div>
+
+
+<div class="container mt-5" *ngIf="applicatonProcessing">
+    <div class="row">
+        <div class="col-12 text-center">
+            <mat-spinner color="accent"></mat-spinner>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-2" *ngIf="!applicatonProcessing">
+    <div class="row">
         <div class="col-12 text-center degreeBig">
             {{ displayData.degree }}°C
         </div>
     </div>
 
-    <div class="row mt-2">
+    <div class="row" style="margin-top: -2em;">
         <div class="col-12 text-center clockAndDate">
             {{ dateString }}
         </div>
@@ -17,7 +29,7 @@
         </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-3">
         <div class="col-12">    
             <div class="row">
                 <div class="col-5 offset-3 text-right shortDesc">{{ displayData.shortDesc }}</div>
@@ -38,6 +50,6 @@
     </div>
 </div>
 
-<div class="sliderContainer">
+<div class="sliderContainer" *ngIf="!applicatonProcessing"> 
     <mat-slider min="0" max="48" value="0" #slider (input)="getWeather(slider.value)"></mat-slider>
 </div>
